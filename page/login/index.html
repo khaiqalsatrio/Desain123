@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulir Login</title>
+<link rel="stylesheet" href="style.css">
+<script src="main.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username"><b>Nama Pengguna</b></label>
+        <input type="text" placeholder="Masukkan Nama Pengguna" name="username" required>
+
+        <label for="password"><b>Kata Sandi</b></label>
+        <input type="password" placeholder="Masukkan Kata Sandi" name="password" required>
+
+        <input type="submit" value="Masuk">
+    </form>
+    <hr>
+    <h2>Daftar</h2>
+    <form id="registerForm">
+        <label for="newUsername"><b>Nama Pengguna Baru</b></label>
+        <input type="text" placeholder="Masukkan Nama Pengguna Baru" name="newUsername" required>
+
+        <label for="newPassword"><b>Kata Sandi Baru</b></label>
+        <input type="password" placeholder="Masukkan Kata Sandi Baru" name="newPassword" required>
+
+        <input type="submit" value="Daftar">
+    </form>
+</div>
+<script>
+    
+    // Fungsi untuk menghandle login
+    function login(event) {
+        event.preventDefault(); // Mencegah pengiriman formulir
+
+        // Mengambil nilai formulir
+        var username = document.forms["loginForm"]["username"].value;
+        var password = document.forms["loginForm"]["password"].value;
+
+        // Memeriksa apakah nama pengguna dan kata sandi cocok
+        if (localStorage.getItem(username) === password) {
+            // Login berhasil
+            alert("Login berhasil!");
+            // Menyimpan nama pengguna ke localStorage untuk sesi
+            localStorage.setItem("username", username);
+            // Mengalihkan ke dashboard atau halaman lainnya
+            window.location.href = "dashboard.html";
+        } else {
+            // Login gagal
+            alert("Nama pengguna atau kata sandi salah!");
+        }
+    }
+
+    // Fungsi untuk menghandle registrasi
+    function register(event) {
+        event.preventDefault(); // Mencegah pengiriman formulir
+
+        // Mengambil nilai formulir
+        var newUsername = document.forms["registerForm"]["newUsername"].value;
+        var newPassword = document.forms["registerForm"]["newPassword"].value;
+
+        // Memeriksa apakah newUsername sudah ada dalam localStorage
+        if (localStorage.getItem(newUsername)) {
+            alert("Nama pengguna sudah ada! Silakan pilih nama pengguna lain.");
+            return;
+        }
+
+        // Menyimpan pengguna baru ke localStorage
+        localStorage.setItem(newUsername, newPassword);
+        alert("Registrasi berhasil! Anda sekarang bisa login dengan akun baru Anda.");
+    }
+
+    // Mendengarkan peristiwa pengiriman formulir login
+    document.getElementById("loginForm").addEventListener("submit", login);
+
+    // Mendengarkan peristiwa pengiriman formulir registrasi
+    document.getElementById("registerForm").addEventListener("submit", register);
+</script>
+
+
+</body>
+</html>
